@@ -1,0 +1,10 @@
+# Sistema e IDE
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Logs e arquivos locais de desenvolvimento
+*.log
+node_modules/
+
+# Saves locais do jogo não são arquivos do projeto, mas ficam no navegador.

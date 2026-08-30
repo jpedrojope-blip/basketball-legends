@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#07090f">
+<meta name="description" content="Simulador de carreira de basquete: escolha o teto de cada atributo com uma lenda real e viva uma carreira jogo a jogo.">
+<title>LENDA DA QUADRA — Simulador de Carreira</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=11">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🏀</text></svg>">
+</head>
+<body>
+
+<!-- ===== CAMADAS DE AMBIENTE (fundo vivo) ===== -->
+<div class="bg-layer bg-glow" aria-hidden="true"></div>
+<div class="bg-layer bg-grid" aria-hidden="true"></div>
+<div class="bg-layer bg-scan" aria-hidden="true"></div>
+
+<div id="app">
+
+  <!-- ===== BARRA SUPERIOR / HUD ===== -->
+  <header id="appbar" class="appbar hidden">
+    <button id="appbar-home" class="appbar-brand" title="Voltar ao menu">
+      <span class="dot"></span><span class="txt">Lenda da Quadra</span>
+    </button>
+    <div id="appbar-stats" class="appbar-stats"></div>
+    <div class="appbar-actions">
+      <button id="btn-shortcuts" class="icon-btn" title="Atalhos de teclado" aria-label="Atalhos de teclado">⌘</button>
+    </div>
+  </header>
+
+  <!-- ===== MENU PRINCIPAL ===== -->
+  <section id="screen-menu" class="screen active">
+    <div class="menu-wrap">
+      <p class="menu-eyebrow"><span class="dot"></span> Motor de simulação v2 · carreira sem fim</p>
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="hero-kicker">BUILD YOUR LEGACY <span>●</span> 2026 SEASON</p>
+          <h1 class="brand">Lenda <span>da Quadra</span></h1>
+          <p class="tagline">O seu nome começa no draft. O seu legado termina na história.</p>
+          <p class="hero-description">Monte seu jogador roubando atributos das maiores lendas do basquete. Encare temporadas, lesões, trocas e playoffs — cada decisão muda a carreira.</p>
+          <div class="menu-actions">
+            <button id="btn-new-career" class="btn btn-primary btn-lg">Começar carreira <span aria-hidden="true">→</span></button>
+            <button id="btn-continue-career" class="btn btn-secondary hidden">Continuar carreira</button>
+            <button id="btn-leaderboard" class="btn btn-ghost">Ranking local</button>
+          </div>
+          <p class="menu-footnote"><span class="status-live"></span> Salvo automaticamente · funciona offline · sem cadastro</p>
+        </div>
+        <div class="hero-stage" aria-label="Quadra de basquete estilizada">
+          <div class="hero-stage-label"><span>CAREER MODE</span><strong>00:00:24</strong></div>
+          <div class="court-lines"><span class="court-key"></span><span class="court-arc"></span><span class="court-ring"></span><span class="court-ball">●</span></div>
+          <div class="hero-stage-stats"><div><strong>10</strong><span>RODADAS DE DRAFT</span></div><div><strong>∞</strong><span>CAMINHOS POSSÍVEIS</span></div></div>
+        </div>
+      </div>
+
+      <div class="menu-features">
+        <div class="feature-card">
+          <span class="ico">01</span>
+          <h4>Draft de tetos</h4>
+          <p>10 rodadas sorteando uma lenda e o ano do draft. Você rouba um atributo — ele vira o seu limite.</p>
+        </div>
+        <div class="feature-card">
+          <span class="ico">02</span>
+          <h4>No seu ritmo</h4>
+          <p>Simule jogo a jogo, com placar e box score, ou feche o mês inteiro num clique. Troque quando quiser.</p>
+        </div>
+        <div class="feature-card">
+          <span class="ico">03</span>
+          <h4>Físico &amp; clube</h4>
+          <p>Durabilidade, regimes de treino, cirurgias, pedidos à diretoria e confiança do time.</p>
+        </div>
+        <div class="feature-card">
+          <span class="ico">04</span>
+          <h4>Retrospecto visual</h4>
+          <p>Radar de atributos, curva de evolução da carreira e o tier de legado no fim da linha.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CRIAÇÃO DE PERSONAGEM ===== -->
+  <section id="screen-create" class="screen">
+    <div class="panel">
+      <h2>Criar Jogador</h2>
+
+      <label class="field-label" for="input-name">Nome do jogador</label>
+      <input id="input-name" class="text-input" type="text" maxlength="24" placeholder="Ex: Marcus Silva">
+
+      <label class="field-label">Posição</label>
+      <div id="position-grid" class="pick-grid"></div>
+
+      <label class="field-label">Dificuldade</label>
+      <div class="pick-grid two-col">
+        <button class="pick-card diff-card" data-diff="amador">
+          <strong>Amador</strong>
+          <span>Evolução mais rápida em direção ao seu teto.</span>
+        </button>
+        <button class="pick-card diff-card" data-diff="pro">
+          <strong>Pro</strong>
+          <span>Evolução mais lenta e incerta. Pra quem quer o desafio de verdade.</span>
+        </button>
+      </div>
+
+      <div class="row-actions">
+        <button id="btn-back-menu" class="btn btn-ghost">Voltar</button>
+        <button id="btn-start-draft" class="btn btn-primary" disabled>Ir pro Draft</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DRAFT (SORTEIA TIME+ERA, VOCÊ ESCOLHE O JOGADOR E O ATRIBUTO) ===== -->
+  <section id="screen-draft" class="screen">
+    <div class="panel wide">
+      <div class="draft-header">
+        <h2>Draft de Lendas</h2>
+        <div class="draft-progress">
+          <span id="draft-round-label">Rodada 1 / 10</span>
+          <div class="progress-bar"><div id="draft-progress-fill" class="progress-fill"></div></div>
+        </div>
+      </div>
+
+      <div class="draft-ovr-banner">
+        <div>Jogador sorteado: <strong id="draft-roll-label">—</strong></div>
+        <div>Seu OVR atual: <strong id="draft-current-ovr">0</strong></div>
+      </div>
+
+      <div id="draft-breadcrumb" class="draft-breadcrumb"></div>
+
+      <div class="draft-reroll-wrap">
+        <button id="btn-draft-reroll" class="btn btn-ghost btn-sm">Girar novamente (<span id="draft-rerolls-left">2</span> restantes)</button>
+      </div>
+
+      <p id="draft-step-title" class="draft-step-title">Aguarde o sorteio</p>
+      <div id="draft-options" class="draft-options"></div>
+
+      <div id="draft-current-attrs" class="attr-mini-grid"></div>
+    </div>
+  </section>
+
+  <!-- ===== DASHBOARD DA CARREIRA ===== -->
+  <section id="screen-career" class="screen">
+    <div class="career-layout">
+
+      <div class="panel player-card">
+        <div class="player-card-top">
+          <div>
+            <h2 id="pc-name">—</h2>
+            <p id="pc-meta" class="muted">—</p>
+          </div>
+          <div class="ovr-badges">
+            <div class="ovr-badge">
+              <span id="pc-ovr">--</span>
+              <small>OVR</small>
+            </div>
+            <div class="ovr-badge potential">
+              <span id="pc-potential-ovr">--</span>
+              <small>Potencial</small>
+            </div>
+          </div>
+        </div>
+        <div id="pc-status-strip" class="status-strip"></div>
+        <div id="pc-radar" class="radar-wrap"></div>
+        <div id="pc-attrs" class="attr-bars"></div>
+      </div>
+
+      <div class="panel calendar-card">
+        <h3>Temporada Atual</h3>
+        <div id="pc-calendar"></div>
+      </div>
+
+      <div class="panel trophy-card">
+        <h3>Vitrine de Troféus</h3>
+        <div id="pc-trophies" class="trophy-grid"></div>
+        <button id="btn-open-trophyroom" class="btn btn-ghost btn-sm" style="margin-top:12px;width:100%;">Ver Sala de Troféus Completa</button>
+      </div>
+
+      <div class="panel recap-card">
+        <h3>Última Temporada Concluída</h3>
+        <div id="pc-last-season">
+          <p class="muted">Ainda não concluiu nenhuma temporada.</p>
+        </div>
+      </div>
+
+      <div class="panel log-card">
+        <div class="card-head">
+          <h3>Histórico de Temporadas</h3>
+          <button id="btn-toggle-cols" class="btn btn-ghost btn-sm js-toggle-cols">Estatísticas completas</button>
+        </div>
+        <div id="pc-sparkline" class="sparkline-wrap"></div>
+        <div class="table-scroll">
+          <table id="pc-log-table" class="table-compact">
+            <thead>
+              <tr><th>Temp</th><th>Idade</th><th>Time</th><th>OVR</th><th class="col-extra">Química</th><th class="col-extra">JJ</th><th>PPG</th><th>RPG</th><th>APG</th><th class="col-extra">TOV</th><th class="col-extra">FG%</th><th class="col-extra">FT%</th><th class="col-extra">EFF</th><th>Recorde</th><th>Playoffs</th><th>Prêmios</th></tr>
+            </thead>
+            <tbody id="pc-log-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="career-subnav">
+        <button type="button" id="btn-nav-physical" class="btn btn-ghost btn-sm" aria-controls="screen-physical">🩺 Físico</button>
+        <button type="button" id="btn-nav-frontoffice" class="btn btn-ghost btn-sm" aria-controls="screen-frontoffice">🏛️ Time</button>
+        <button type="button" id="btn-nav-roster" class="btn btn-ghost btn-sm" aria-controls="screen-roster">👥 Elenco</button>
+        <button type="button" id="btn-standings" class="btn btn-ghost btn-sm" aria-controls="screen-standings">📊 Classificação</button>
+      </div>
+
+      <div class="career-actions">
+        <button id="btn-sim-season" class="btn btn-primary btn-lg">Simular Próximo Mês</button>
+        <button id="btn-request-trade" class="btn btn-secondary">Pedir Troca</button>
+        <button id="btn-fast-forward" class="btn btn-secondary">Carreira Relâmpago (resto da carreira)</button>
+        <button id="btn-retire" class="btn btn-danger">Aposentar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FÍSICO / PREPARAÇÃO ===== -->
+  <section id="screen-physical" class="screen">
+    <div class="panel wide">
+      <h2>🩺 Físico &amp; Preparação</h2>
+      <div id="physical-status" class="status-strip"></div>
+
+      <label class="field-label">Regime de treino da temporada</label>
+      <div id="regime-grid" class="pick-grid two-col"></div>
+
+      <label class="field-label">Contratações permanentes</label>
+      <div id="physical-upgrades" class="upgrade-grid"></div>
+
+      <label class="field-label">Cirurgia</label>
+      <div id="physical-surgery"></div>
+
+      <div class="row-actions">
+        <button id="btn-physical-back" class="btn btn-ghost">Voltar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FRONT OFFICE / TIME ===== -->
+  <section id="screen-frontoffice" class="screen">
+    <div class="panel wide">
+      <h2>🏛️ Relação com o Clube</h2>
+      <div id="frontoffice-status" class="status-strip"></div>
+      <p class="muted" style="margin-top:14px;">No máximo 2 pedidos por entressafra. Pedidos só podem ser feitos entre temporadas.</p>
+      <div id="frontoffice-requests" class="request-grid"></div>
+      <div class="row-actions">
+        <button id="btn-frontoffice-back" class="btn btn-ghost">Voltar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ELENCO ATUAL ===== -->
+  <section id="screen-roster" class="screen">
+    <div class="panel wide">
+      <h2>👥 Elenco Atual</h2>
+      <p id="roster-subtitle" class="muted">—</p>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Jogador</th><th>Função</th><th>PPG</th><th>RPG</th><th>APG</th></tr></thead>
+          <tbody id="roster-body"></tbody>
+        </table>
+      </div>
+      <p class="muted" style="margin-top:10px;font-size:11px;">Elenco fictício gerado pra dar contexto — não são jogadores reais.</p>
+      <div class="row-actions">
+        <button id="btn-roster-back" class="btn btn-ghost">Voltar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SALA DE TROFÉUS ===== -->
+  <section id="screen-trophyroom" class="screen">
+    <div class="panel wide">
+      <h2>🏆 Sala de Troféus</h2>
+      <div id="trophyroom-body"></div>
+      <div class="row-actions">
+        <button id="btn-trophyroom-back" class="btn btn-ghost">Voltar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CLASSIFICAÇÃO DAS CONFERÊNCIAS ===== -->
+  <section id="screen-standings" class="screen">
+    <div class="panel wide">
+      <h2>Classificação das Conferências</h2>
+      <p id="standings-subtitle" class="muted">—</p>
+      <div class="standings-grid">
+        <div>
+          <h3>Conferência Leste</h3>
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>#</th><th>Time</th><th>V</th><th>D</th></tr></thead>
+              <tbody id="standings-east-body"></tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <h3>Conferência Oeste</h3>
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>#</th><th>Time</th><th>V</th><th>D</th></tr></thead>
+              <tbody id="standings-west-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="row-actions">
+        <button id="btn-standings-back" class="btn btn-ghost">Voltar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RETROSPECTO FINAL ===== -->
+  <section id="screen-retire" class="screen">
+    <div class="panel wide retire-panel">
+      <div id="retire-banner" class="retire-banner">
+        <p class="retire-eyebrow">LEGADO FINAL</p>
+        <h2 id="retire-tier-name">—</h2>
+        <p id="retire-tier-desc" class="muted">—</p>
+        <p id="retire-score">Pontuação de legado: —</p>
+      </div>
+      <div id="retire-summary" class="retire-summary"></div>
+      <div id="retire-sparkline" class="sparkline-wrap"></div>
+      <div id="retire-closest" class="closest-legend-card"></div>
+      <div class="card-head">
+        <h3>Temporada a temporada</h3>
+        <button class="btn btn-ghost btn-sm js-toggle-cols">Estatísticas completas</button>
+      </div>
+      <div class="table-scroll">
+        <table id="retire-log-table" class="table-compact">
+          <thead>
+            <tr><th>Temp</th><th>Idade</th><th>Time</th><th>OVR</th><th class="col-extra">Química</th><th class="col-extra">JJ</th><th>PPG</th><th>RPG</th><th>APG</th><th class="col-extra">TOV</th><th class="col-extra">FG%</th><th class="col-extra">FT%</th><th class="col-extra">EFF</th><th>Recorde</th><th>Playoffs</th><th>Prêmios</th></tr>
+          </thead>
+          <tbody id="retire-log-body"></tbody>
+        </table>
+      </div>
+      <div class="row-actions">
+        <button id="btn-retire-newcareer" class="btn btn-primary">Nova Carreira</button>
+        <button id="btn-retire-leaderboard" class="btn btn-secondary">Ver Ranking Local</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RANKING LOCAL ===== -->
+  <section id="screen-leaderboard" class="screen">
+    <div class="panel wide">
+      <h2>Ranking Local</h2>
+      <p class="muted">Salvo neste navegador. Carreiras concluídas, ordenadas por pontuação de legado.</p>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th>#</th><th>Nome</th><th>Pos</th><th>Tier</th><th>Pontuação</th><th>PPG Carreira</th><th>Anéis</th><th>MVPs</th></tr>
+          </thead>
+          <tbody id="leaderboard-body"></tbody>
+        </table>
+      </div>
+      <div class="row-actions">
+        <button id="btn-leaderboard-back" class="btn btn-ghost">Voltar</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ===== MODAL: ROLETA DE LENDAS ===== -->
+<div id="modal-player-roulette" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="player-roulette-title">
+  <div class="modal-box draft-reveal-box player-roulette-box">
+    <p class="retire-eyebrow">RODADA DO DRAFT</p>
+    <h3 id="player-roulette-title">Quem será a próxima lenda?</h3>
+    <div id="player-roulette-name" class="draft-reveal-roulette spinning" aria-live="polite">Sorteando...</div>
+    <div id="player-roulette-meta" class="player-roulette-meta">A roleta está girando</div>
+    <button id="btn-player-roulette-close" class="btn btn-primary hidden">Ver atributos</button>
+  </div>
+</div>
+
+<!-- ===== PILHA DE NOTIFICAÇÕES ===== -->
+<div id="toast-stack" class="toast-stack" aria-live="polite"></div>
+
+<!-- ===== MODAL: TEMPORADA / EVENTOS / AVISOS ===== -->
+<div id="modal-season" class="modal-overlay hidden">
+  <div class="modal-box">
+    <h3 id="modal-season-title">Resumo da Temporada</h3>
+    <div id="modal-season-body"></div>
+    <button id="btn-modal-season-close" class="btn btn-primary">Continuar</button>
+  </div>
+</div>
+
+<!-- ===== MODAL: SÉRIE DE PLAYOFFS AO VIVO ===== -->
+<div id="modal-series" class="modal-overlay hidden">
+  <div class="modal-box">
+    <h3 id="modal-series-title">PLAYOFFS — AO VIVO</h3>
+    <div id="series-games"></div>
+    <button id="btn-modal-series-close" class="btn btn-primary hidden">Ver Resultado</button>
+  </div>
+</div>
+
+<!-- ===== MODAL: ROLETA DO DRAFT ===== -->
+<div id="modal-draft-reveal" class="modal-overlay hidden">
+  <div class="modal-box draft-reveal-box">
+    <p class="retire-eyebrow">VOCÊ FOI DRAFTADO</p>
+    <div id="draft-reveal-position" class="draft-reveal-position"></div>
+    <div id="draft-reveal-roulette" class="draft-reveal-roulette">—</div>
+    <button id="btn-draft-reveal-close" class="btn btn-primary hidden">Começar Carreira</button>
+  </div>
+</div>
+
+<!-- ===== MODAL: ANIMAÇÃO DE TROCA ===== -->
+<div id="modal-trade-anim" class="modal-overlay hidden">
+  <div class="modal-box trade-anim-box">
+    <p class="retire-eyebrow">TROCA CONCLUÍDA</p>
+    <div class="trade-anim-columns">
+      <div class="trade-anim-side">
+        <div class="trade-anim-team" id="trade-anim-from-team">—</div>
+        <div class="trade-anim-label">recebe</div>
+        <div id="trade-anim-incoming" class="trade-anim-pieces"></div>
+      </div>
+      <div class="trade-anim-arrow">⇄</div>
+      <div class="trade-anim-side highlight">
+        <div class="trade-anim-team" id="trade-anim-to-team">—</div>
+        <div class="trade-anim-label">recebe</div>
+        <div class="trade-anim-pieces"><span class="trade-piece you">Você</span></div>
+      </div>
+    </div>
+    <button id="btn-trade-anim-close" class="btn btn-primary hidden">Continuar</button>
+  </div>
+</div>
+
+<!-- ===== MODAL: CAMPEÃO ===== -->
+<div id="modal-championship" class="modal-overlay hidden">
+  <div class="modal-box championship-box">
+    <div class="confetti" id="confetti-wrap"></div>
+    <div class="championship-trophy">🏆</div>
+    <h2 class="championship-title">CAMPEÃO!</h2>
+    <p id="championship-sub" class="muted">—</p>
+    <button id="btn-championship-close" class="btn btn-primary">Continuar</button>
+  </div>
+</div>
+
+<!-- ===== MODAL: CONFIRMAÇÃO ===== -->
+<div id="modal-confirm" class="modal-overlay hidden">
+  <div class="modal-box dialog-box">
+    <h3 id="confirm-title">Confirmar</h3>
+    <p id="confirm-text">—</p>
+    <div class="dialog-actions">
+      <button id="btn-confirm-cancel" class="btn btn-ghost">Cancelar</button>
+      <button id="btn-confirm-ok" class="btn btn-primary">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL: ATALHOS ===== -->
+<div id="modal-shortcuts" class="modal-overlay hidden">
+  <div class="modal-box dialog-box">
+    <h3>Atalhos de teclado</h3>
+    <div class="shortcut-list">
+      <div class="shortcut-row"><span>Simular próximo jogo / mês / rodada</span><span class="keys"><span class="kbd">Espaço</span></span></div>
+      <div class="shortcut-row"><span>Físico</span><span class="keys"><span class="kbd">F</span></span></div>
+      <div class="shortcut-row"><span>Relação com o clube</span><span class="keys"><span class="kbd">T</span></span></div>
+      <div class="shortcut-row"><span>Elenco</span><span class="keys"><span class="kbd">E</span></span></div>
+      <div class="shortcut-row"><span>Classificação</span><span class="keys"><span class="kbd">C</span></span></div>
+      <div class="shortcut-row"><span>Sala de troféus</span><span class="keys"><span class="kbd">R</span></span></div>
+      <div class="shortcut-row"><span>Voltar / fechar</span><span class="keys"><span class="kbd">Esc</span></span></div>
+    </div>
+    <button id="btn-shortcuts-close" class="btn btn-primary">Fechar</button>
+  </div>
+</div>
+
+<script src="js/rng.js?v=8"></script>
+<script src="js/data.js?v=8"></script>
+<script src="js/engine.js?v=14"></script>
+<script src="js/ui.js?v=14"></script>
+<script src="js/fx.js?v=12"></script>
+<script src="js/main.js?v=14"></script>
+</body>
+</html>
