@@ -2,6 +2,9 @@
 .DS_Store
 Thumbs.db
 .vscode/
+.claude/
+*.legacy.bak.*
+index.legacy.bak.html
 
 # Logs e arquivos locais de desenvolvimento
 *.log
