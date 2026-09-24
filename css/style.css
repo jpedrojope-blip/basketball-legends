@@ -354,6 +354,16 @@ a { color: var(--accent); }
 .hero-stage-stats div { display: grid; gap: 2px; }
 .hero-stage-stats strong { font: 800 26px var(--font-display); color: var(--text); }
 .hero-stage-stats span { color: var(--muted); font: 700 9px var(--font-mono); letter-spacing: 1px; }
+.react-court-shell { position: absolute; inset: 0; }
+.react-court-svg { position: absolute; inset: 62px 22px 58px; width: calc(100% - 44px); height: calc(100% - 120px); overflow: visible; }
+.react-floor { filter: drop-shadow(0 16px 14px rgba(0,0,0,.45)); opacity: .78; }
+.react-line, .react-arc { fill: none; stroke: rgba(255,255,255,.5); stroke-width: 3; vector-effect: non-scaling-stroke; }
+.react-arc { stroke: var(--accent); stroke-width: 4; }
+.react-backboard { fill: rgba(255,255,255,.08); stroke: rgba(255,255,255,.55); stroke-width: 3; }
+.react-hoop { fill: none; stroke: var(--accent-2); stroke-width: 5; filter: drop-shadow(0 0 9px var(--accent)); }
+.react-ball { fill: var(--accent-2); filter: drop-shadow(0 8px 12px rgba(255,122,26,.55)); animation: reactBallFloat 3.4s ease-in-out infinite; }
+.react-ball-lines { fill: none; stroke: #9e4313; stroke-width: 2; }
+@keyframes reactBallFloat { 50% { transform: translate(-10px, -13px); } }
 
 .brand {
   font-family: var(--font-display);
