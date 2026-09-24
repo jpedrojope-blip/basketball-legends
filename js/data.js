@@ -108,6 +108,22 @@ const LEGENDS = [
   { id: "sga", name: "Shai Gilgeous-Alexander", pos: "PG", era: "anos 2020", team: "okc", tag: "Armador dos anos 2020, frieza cirúrgica pra converter em qualquer ângulo.", stats: { FIN: 88, ARM: 62, PAS: 65, REB: 40, DEF: 72, ATL: 78, FIS: 55, IQ: 85 }, stars: { MRUIM: 5, FINTA: 5 } },
   { id: "morant", name: "Ja Morant", pos: "PG", era: "anos 2020", team: "mem", tag: "Armador dos anos 2020, explosão atlética que gera highlight toda semana.", stats: { FIN: 80, ARM: 50, PAS: 75, REB: 40, DEF: 55, ATL: 97, FIS: 50, IQ: 72 }, stars: { MRUIM: 4, FINTA: 3 } },
   { id: "wemby", name: "Victor Wembanyama", pos: "C", era: "anos 2020", team: "sas", tag: "Pivô dos anos 2020, envergadura de pivô com habilidades de ala.", stats: { FIN: 78, ARM: 60, PAS: 55, REB: 78, DEF: 90, ATL: 78, FIS: 55, IQ: 75 }, stars: { MRUIM: 3, FINTA: 3 } },
+  { id: "walton", name: "Bill Walton", pos: "C", era: "anos 70/80", team: "por", tag: "Pivô dos anos 70, passe raro e presença dominante no garrafão.", stats: { FIN: 82, ARM: 20, PAS: 78, REB: 88, DEF: 82, ATL: 65, FIS: 78, IQ: 88 }, stars: { MRUIM: 2, FINTA: 3 } },
+  { id: "mchale", name: "Kevin McHale", pos: "PF", era: "anos 80", team: "bos", tag: "Ala-pivô dos anos 80, repertório de movimentos no poste baixo.", stats: { FIN: 94, ARM: 20, PAS: 35, REB: 72, DEF: 78, ATL: 60, FIS: 78, IQ: 82 }, stars: { MRUIM: 2, FINTA: 4 } },
+  { id: "worthy", name: "James Worthy", pos: "SF", era: "anos 80", team: "lal", tag: "Ala dos anos 80, velocidade e finalização em transição.", stats: { FIN: 88, ARM: 35, PAS: 45, REB: 60, DEF: 65, ATL: 88, FIS: 65, IQ: 78 }, stars: { MRUIM: 3, FINTA: 3 } },
+  { id: "johnson", name: "Dennis Johnson", pos: "SG", era: "anos 80", team: "bos", tag: "Ala-armador dos anos 80, defesa e decisões grandes nos playoffs.", stats: { FIN: 72, ARM: 45, PAS: 78, REB: 45, DEF: 88, ATL: 72, FIS: 55, IQ: 88 }, stars: { MRUIM: 3, FINTA: 3 } },
+  { id: "webber", name: "Chris Webber", pos: "PF", era: "anos 90", team: "det", tag: "Ala-pivô dos anos 90, força, passe e criatividade no garrafão.", stats: { FIN: 82, ARM: 45, PAS: 72, REB: 82, DEF: 62, ATL: 78, FIS: 78, IQ: 78 }, stars: { MRUIM: 3, FINTA: 3 } },
+  { id: "mullin", name: "Chris Mullin", pos: "SF", era: "anos 90", team: "gsw", tag: "Ala dos anos 90, arremesso canhoto e leitura ofensiva refinada.", stats: { FIN: 72, ARM: 92, PAS: 58, REB: 40, DEF: 45, ATL: 55, FIS: 42, IQ: 82 }, stars: { MRUIM: 3, FINTA: 4 } },
+  { id: "allen", name: "Allen Iverson", pos: "PG", era: "anos 2000", team: "phi", tag: "Armador dos anos 2000, velocidade e coragem contra qualquer marcador.", stats: { FIN: 88, ARM: 58, PAS: 62, REB: 30, DEF: 58, ATL: 94, FIS: 38, IQ: 78 }, stars: { MRUIM: 5, FINTA: 5 } },
+  { id: "pierce", name: "Paul Pierce", pos: "SF", era: "anos 2000", team: "bos", tag: "Ala dos anos 2000, arremesso decisivo e jogo de meia distância.", stats: { FIN: 82, ARM: 82, PAS: 58, REB: 52, DEF: 55, ATL: 55, FIS: 55, IQ: 85 }, stars: { MRUIM: 3, FINTA: 4 } },
+  { id: "bosh", name: "Chris Bosh", pos: "PF", era: "anos 2000", team: "mia", tag: "Ala-pivô dos anos 2000, mobilidade, defesa e arremesso.", stats: { FIN: 78, ARM: 55, PAS: 42, REB: 78, DEF: 72, ATL: 68, FIS: 65, IQ: 78 }, stars: { MRUIM: 2, FINTA: 3 } },
+  { id: "gasol", name: "Pau Gasol", pos: "C", era: "anos 2000", team: "lal", tag: "Pivô dos anos 2000, técnica, passe e toque suave.", stats: { FIN: 82, ARM: 45, PAS: 68, REB: 78, DEF: 65, ATL: 52, FIS: 65, IQ: 85 }, stars: { MRUIM: 2, FINTA: 4 } },
+  { id: "carmelo", name: "Carmelo Anthony", pos: "SF", era: "anos 2000", team: "nyk", tag: "Ala dos anos 2000, um dos ataques de meia distância mais elegantes.", stats: { FIN: 86, ARM: 72, PAS: 38, REB: 48, DEF: 42, ATL: 62, FIS: 58, IQ: 72 }, stars: { MRUIM: 3, FINTA: 4 } },
+  { id: "weston", name: "Amar'e Stoudemire", pos: "PF", era: "anos 2000", team: "phx", tag: "Ala-pivô dos anos 2000, explosão e finalização acima do aro.", stats: { FIN: 88, ARM: 25, PAS: 28, REB: 72, DEF: 48, ATL: 92, FIS: 78, IQ: 62 }, stars: { MRUIM: 2, FINTA: 2 } },
+  { id: "rose", name: "Derrick Rose", pos: "PG", era: "anos 2010", team: "chi", tag: "Armador dos anos 2010, explosão e mudança de direção lendárias.", stats: { FIN: 84, ARM: 52, PAS: 68, REB: 28, DEF: 42, ATL: 96, FIS: 48, IQ: 70 }, stars: { MRUIM: 4, FINTA: 4 } },
+  { id: "butler", name: "Jimmy Butler", pos: "SF", era: "anos 2010", team: "mia", tag: "Ala dos anos 2010, intensidade, defesa e protagonismo nos playoffs.", stats: { FIN: 78, ARM: 55, PAS: 62, REB: 52, DEF: 82, ATL: 68, FIS: 62, IQ: 86 }, stars: { MRUIM: 3, FINTA: 4 } },
+  { id: "booker", name: "Devin Booker", pos: "SG", era: "anos 2020", team: "phx", tag: "Ala-armador dos anos 2020, pontuador completo e arremesso polido.", stats: { FIN: 82, ARM: 86, PAS: 62, REB: 35, DEF: 50, ATL: 62, FIS: 48, IQ: 82 }, stars: { MRUIM: 4, FINTA: 4 } },
+  { id: "doncic2", name: "Anthony Edwards", pos: "SG", era: "anos 2020", team: "min", tag: "Ala-armador dos anos 2020, força e explosão para atacar a cesta.", stats: { FIN: 82, ARM: 72, PAS: 58, REB: 42, DEF: 62, ATL: 92, FIS: 68, IQ: 75 }, stars: { MRUIM: 4, FINTA: 4 } },
 ];
 
 // Ano em que cada lenda entrou no draft (ou no draft da liga em que iniciou a carreira).
@@ -123,6 +139,10 @@ const LEGEND_DRAFT_YEARS = {
   westbrook: 2008, kawhi: 2011, giannis: 2013, dame: 2012, klay: 2011,
   draymond: 2012, ad: 2012, pg13: 2010, jokic: 2014, luka: 2018,
   embiid: 2014, tatum: 2017, sga: 2018, morant: 2019, wemby: 2023,
+  walton: 1974, mchale: 1980, worthy: 1982, johnson: 1976, webber: 1993,
+  mullin: 1985, allen: 1996, pierce: 1998, bosh: 2003, gasol: 2001,
+  carmelo: 2003, weston: 2002, rose: 2008, butler: 2011, booker: 2015,
+  doncic2: 2020,
 };
 LEGENDS.forEach((legend) => { legend.draftYear = LEGEND_DRAFT_YEARS[legend.id]; });
 
