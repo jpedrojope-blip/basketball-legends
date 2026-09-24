@@ -61,7 +61,7 @@ const UI = (function () {
 
   function playPlayerRoulette(roll, onDone) {
     const modal = $("modal-player-roulette");
-    const nameEl = $("player-roulette-name");
+    const trackEl = $("player-roulette-track");
     const metaEl = $("player-roulette-meta");
     const closeBtn = $("btn-player-roulette-close");
     const winner = LEGENDS.find((legend) => legend.id === roll.legendIds[0]);
@@ -69,21 +69,22 @@ const UI = (function () {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const totalTicks = reduceMotion ? 1 : 22;
 
-    nameEl.className = "draft-reveal-roulette spinning";
-    nameEl.textContent = "Sorteando...";
+    const previews = Array.from({ length: 24 }, (_, i) => LEGENDS[(i * 7 + roll.draftYear) % LEGENDS.length]);
+    previews.push(winner);
+    trackEl.innerHTML = previews.map((p) => `<strong>${p.name}</strong><small>${p.pos} · Draft ${p.draftYear}</small>`).join("");
+    trackEl.style.transform = "translateY(0)";
     metaEl.textContent = "A roleta está girando";
     closeBtn.classList.add("hidden");
     modal.classList.remove("hidden");
 
     const interval = setInterval(() => {
       const preview = LEGENDS[(ticks * 7 + roll.draftYear) % LEGENDS.length];
-      nameEl.textContent = preview.name;
       metaEl.textContent = `${preview.pos} · Draft ${preview.draftYear}`;
       ticks++;
       if (ticks >= totalTicks) {
         clearInterval(interval);
-        nameEl.textContent = winner.name;
-        nameEl.className = "draft-reveal-roulette landed";
+        trackEl.style.transform = `translateY(-${24 * 72}px)`;
+        trackEl.classList.add("landed");
         metaEl.textContent = `${winner.pos} · Draft ${winner.draftYear} · ${teamName(winner.team)}`;
         closeBtn.classList.remove("hidden");
         closeBtn.focus();
