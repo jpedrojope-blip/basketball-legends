@@ -336,17 +336,19 @@ a { color: var(--accent); }
 .hero-copy .menu-actions { margin: 0; max-width: 380px; }
 .hero-copy .menu-footnote { margin-top: 18px; }
 .status-live { display: inline-block; width: 7px; height: 7px; margin-right: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); }
-.hero-stage { min-height: 420px; position: relative; overflow: hidden; border: 1px solid var(--border-strong); border-radius: 24px; background: radial-gradient(circle at 50% 45%, rgba(255,122,26,.16), transparent 32%), linear-gradient(145deg, #111a28, #080b12 70%); box-shadow: 0 28px 70px -30px rgba(0,0,0,.9); transform: rotate(1.5deg); }
+.hero-stage { min-height: 420px; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,.18); border-radius: 24px; background: linear-gradient(145deg, #172235, #0a101b 70%); box-shadow: 0 28px 70px -30px rgba(0,0,0,.9), inset 0 0 70px rgba(0,0,0,.25); transform: rotate(1.5deg); }
 .hero-stage::before { content: ""; position: absolute; inset: 14px; border: 1px solid rgba(255,255,255,.07); border-radius: 16px; }
+.hero-stage::after { content: ""; position: absolute; inset: 0; opacity: .28; background: repeating-linear-gradient(90deg, transparent 0 38px, rgba(255,180,92,.12) 39px 40px), linear-gradient(90deg, rgba(255,142,37,.18), transparent 38%, rgba(255,142,37,.12)); mix-blend-mode: screen; pointer-events: none; }
 .hero-stage-label { position: absolute; top: 30px; left: 30px; right: 30px; display: flex; justify-content: space-between; color: var(--muted); font: 700 10px var(--font-mono); letter-spacing: 1.4px; }
 .hero-stage-label strong { color: var(--text); }
-.court-lines { position: absolute; inset: 70px 38px 82px; border: 2px solid rgba(255,255,255,.16); border-radius: 50%; transform: rotate(-10deg); }
-.court-lines::before { content: ""; position: absolute; left: -2px; right: -2px; top: 50%; border-top: 2px solid rgba(255,255,255,.16); }
-.court-lines::after { content: ""; position: absolute; width: 44%; height: 52%; left: 28%; top: 24%; border: 2px solid rgba(255,255,255,.14); border-radius: 50%; }
-.court-key { position: absolute; width: 32%; height: 55%; left: 34%; top: -1px; border: 2px solid var(--accent-line); border-top: 0; }
-.court-arc { position: absolute; width: 67%; height: 88%; left: 16%; top: 5%; border: 2px solid var(--accent); border-radius: 50%; opacity: .75; }
-.court-ring { position: absolute; width: 26px; height: 26px; left: calc(50% - 13px); top: 15%; border: 3px solid var(--accent-2); border-radius: 50%; box-shadow: 0 0 25px var(--accent); }
-.court-ball { position: absolute; left: 51%; top: 39%; color: var(--accent-2); font-size: 82px; line-height: 1; text-shadow: 0 0 28px var(--accent); animation: floatBall 3.5s ease-in-out infinite; }
+.court-lines { position: absolute; inset: 72px 54px 88px; border: 2px solid rgba(255,255,255,.27); border-radius: 8px; transform: perspective(500px) rotateX(34deg) rotateZ(-1deg); box-shadow: inset 0 0 30px rgba(255,122,26,.1); z-index: 1; }
+.court-lines::before { content: ""; position: absolute; left: -2px; right: -2px; top: 50%; border-top: 2px solid rgba(255,255,255,.25); }
+.court-lines::after { content: ""; position: absolute; width: 42%; height: 42%; left: 29%; top: 29%; border: 2px solid rgba(255,255,255,.22); border-radius: 50%; }
+.court-key { position: absolute; width: 30%; height: 46%; left: 35%; top: -1px; border: 2px solid rgba(255,255,255,.28); border-top: 0; background: rgba(255,122,26,.06); }
+.court-arc { position: absolute; width: 74%; height: 78%; left: 13%; top: 9%; border: 2px solid var(--accent); border-radius: 50%; opacity: .8; }
+.court-ring { position: absolute; width: 30px; height: 30px; left: calc(50% - 15px); top: 9%; border: 3px solid var(--accent-2); border-radius: 50%; box-shadow: 0 0 25px var(--accent); background: rgba(255,122,26,.12); }
+.court-ring::after { content: ""; position: absolute; width: 56px; height: 9px; left: -16px; top: -16px; border: 2px solid rgba(255,255,255,.35); border-bottom: 0; }
+.court-ball { position: absolute; left: 51%; top: 42%; color: var(--accent-2); font-size: 82px; line-height: 1; text-shadow: 0 0 28px var(--accent); animation: floatBall 3.5s ease-in-out infinite; z-index: 2; }
 @keyframes floatBall { 50% { transform: translate(-10px, -16px) rotate(12deg); } }
 .hero-stage-stats { position: absolute; bottom: 28px; left: 30px; right: 30px; display: flex; gap: 28px; }
 .hero-stage-stats div { display: grid; gap: 2px; }
