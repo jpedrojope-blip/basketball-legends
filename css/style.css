@@ -1309,16 +1309,31 @@ tbody tr:last-child td { border-bottom: none; }
   .retire-banner { margin: -18px -18px 20px; }
   .toast-stack { left: 12px; right: 12px; bottom: 12px; max-width: none; }
 
-  .menu-wrap { padding-top: 3vh; }
-  .hero-grid { grid-template-columns: 1fr; gap: 18px; }
+  .menu-wrap { padding: 18px 0 30px; }
+  .menu-eyebrow { margin-bottom: 18px; padding: 5px 12px; font-size: 9px; letter-spacing: 1.5px; }
+  .hero-grid { grid-template-columns: 1fr; gap: 20px; }
   .hero-copy { text-align: center; }
+  .hero-copy { padding: 8px 0 0; }
+  .hero-kicker { margin-bottom: 12px; font-size: 9px; letter-spacing: 1.5px; }
+  .hero-copy .brand { font-size: clamp(48px, 15vw, 64px); line-height: .9; margin-bottom: 16px; }
+  .hero-copy .tagline { font-size: 17px; line-height: 1.25; margin-bottom: 12px; }
+  .hero-description { font-size: 13px; line-height: 1.5; margin-bottom: 20px; max-width: 320px; }
   .hero-copy .menu-actions { margin: 0 auto; }
+  .hero-copy .menu-actions .btn { min-height: 48px; }
+  .hero-copy .menu-footnote { margin-top: 13px; font-size: 11px; }
   .hero-description { margin-left: auto; margin-right: auto; }
-  .hero-stage { min-height: 300px; transform: none; }
-  .court-lines { inset: 58px 30px 70px; }
+  .hero-stage { min-height: 250px; transform: none; border-radius: 20px; }
+  .hero-stage-label { top: 20px; left: 20px; right: 20px; font-size: 9px; }
+  .court-lines { inset: 48px 28px 62px; }
+  .court-ball { font-size: 62px; }
   .hero-stage-stats { bottom: 20px; left: 22px; right: 22px; }
-  .hero-stage-stats strong { font-size: 22px; }
-  .menu-features { margin-top: 30px; }
+  .hero-stage-stats { gap: 18px; }
+  .hero-stage-stats strong { font-size: 20px; }
+  .hero-stage-stats span { font-size: 8px; letter-spacing: .7px; }
+  .menu-features { margin-top: 24px; gap: 9px; }
+  .feature-card { padding: 13px; }
+  .feature-card h4 { font-size: 13px; }
+  .feature-card p { font-size: 11px; }
 
   /* barra de ação fixa no rodapé — o gesto principal sempre ao alcance */
   .career-actions {
