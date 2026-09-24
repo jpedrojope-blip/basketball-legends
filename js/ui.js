@@ -73,19 +73,19 @@ const UI = (function () {
     const winnerIndex = previews.findIndex((p) => p.id === winner.id);
     if (winnerIndex < 0) previews[0] = winner;
     const finalIndex = winnerIndex < 0 ? 0 : winnerIndex;
-    wheelEl.innerHTML = previews.map((p) => `<span>${p.name.split(" ")[0]}</span>`).join("");
-    wheelEl.style.transform = "rotate(0deg)";
+    wheelEl.innerHTML = `<small>LENDA ATUAL</small><strong>${previews[0].name}</strong><span>${previews[0].pos} · DRAFT ${previews[0].draftYear} · ${teamName(previews[0].team)}</span>`;
     metaEl.textContent = "A roleta está girando";
     closeBtn.classList.add("hidden");
     modal.classList.remove("hidden");
 
     const interval = setInterval(() => {
       const preview = LEGENDS[(ticks * 7 + roll.draftYear) % LEGENDS.length];
+      wheelEl.innerHTML = `<small>LENDA ATUAL</small><strong>${preview.name}</strong><span>${preview.pos} · DRAFT ${preview.draftYear} · ${teamName(preview.team)}</span>`;
       metaEl.textContent = `${preview.pos} · Draft ${preview.draftYear}`;
       ticks++;
       if (ticks >= totalTicks) {
         clearInterval(interval);
-        wheelEl.style.transform = `rotate(${1440 + (360 - finalIndex * 45)}deg)`;
+        wheelEl.innerHTML = `<small>LENDA ATUAL</small><strong>${winner.name}</strong><span>${winner.pos} · DRAFT ${winner.draftYear} · ${teamName(winner.team)}</span>`;
         wheelEl.classList.add("landed");
         metaEl.textContent = `${winner.pos} · Draft ${winner.draftYear} · ${teamName(winner.team)}`;
         closeBtn.classList.remove("hidden");

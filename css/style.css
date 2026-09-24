@@ -1164,12 +1164,14 @@ tbody tr:last-child td { border-bottom: none; }
 .draft-reveal-box { text-align: center; }
 .player-roulette-box { max-width: 560px; }
 .player-roulette-box h3 { margin-bottom: 18px; }
-.lucky-wheel-wrap { position: relative; width: 290px; height: 290px; margin: 0 auto 20px; }
-.lucky-wheel { position: absolute; inset: 0; border-radius: 50%; border: 5px solid var(--accent-2); background: conic-gradient(#ff8a25 0 45deg, #17263b 45deg 90deg, #e45f19 90deg 135deg, #1b3047 135deg 180deg, #ff9d38 180deg 225deg, #142338 225deg 270deg, #e96c20 270deg 315deg, #1d334b 315deg 360deg); box-shadow: 0 0 30px rgba(255,122,26,.35), inset 0 0 22px rgba(0,0,0,.5); transition: transform 2.8s cubic-bezier(.12,.78,.16,1); }
-.lucky-wheel::after { content: ""; position: absolute; inset: 42%; border-radius: 50%; background: var(--surface-1); border: 3px solid var(--accent-2); box-shadow: 0 0 15px rgba(0,0,0,.5); }
-.lucky-wheel span { position: absolute; left: 50%; top: 50%; width: 74px; margin: -8px 0 0 -37px; text-align: center; color: #fff; font: 900 11px/1 var(--font-mono); text-transform: uppercase; transform: rotate(calc(var(--i, 0) * 45deg)) translateY(-112px) rotate(calc(var(--i, 0) * -45deg)); }
-.lucky-wheel span:nth-child(1){--i:0}.lucky-wheel span:nth-child(2){--i:1}.lucky-wheel span:nth-child(3){--i:2}.lucky-wheel span:nth-child(4){--i:3}.lucky-wheel span:nth-child(5){--i:4}.lucky-wheel span:nth-child(6){--i:5}.lucky-wheel span:nth-child(7){--i:6}.lucky-wheel span:nth-child(8){--i:7}
-.wheel-pointer { position: absolute; z-index: 3; left: 50%; top: -12px; transform: translateX(-50%); color: var(--gold); font-size: 28px; filter: drop-shadow(0 2px 4px #000); }
+.legend-slot-card { position: relative; min-height: 178px; margin: 0 auto 20px; padding: 24px 28px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; text-align: left; border: 1px solid rgba(245,201,83,.45); border-radius: 10px; background: radial-gradient(circle at 84% 18%, rgba(245,201,83,.16), transparent 30%), linear-gradient(120deg, #050607, #101419); box-shadow: 0 0 34px rgba(245,201,83,.12), inset 0 0 45px rgba(255,255,255,.025); overflow: hidden; }
+.legend-slot-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,.08) 45%, transparent 58%); animation: cardShine 2.6s ease-in-out infinite; pointer-events: none; }
+.legend-slot-card small { color: var(--muted); font: 800 10px var(--font-mono); letter-spacing: 2px; margin-bottom: 12px; }
+.legend-slot-card strong { color: var(--gold); font: 900 clamp(26px, 4vw, 42px)/1 var(--font-display); text-transform: uppercase; letter-spacing: -.02em; }
+.legend-slot-card span { color: var(--muted); font: 700 11px var(--font-mono); letter-spacing: 1px; margin-top: 12px; text-transform: uppercase; }
+.legend-slot-card.landed { animation: cardLand .55s var(--ease-spring); }
+@keyframes cardShine { 50% { transform: translateX(100%); } }
+@keyframes cardLand { 50% { transform: scale(1.025); border-color: var(--accent-2); } }
 .roulette-window { position: relative; height: 152px; overflow: hidden; margin-bottom: 20px; border: 2px solid var(--accent); border-radius: var(--r-md); background: var(--surface-2); box-shadow: inset 0 0 40px -20px var(--accent); }
 .roulette-window::before, .roulette-window::after { content: ""; position: absolute; left: 0; right: 0; height: 38px; z-index: 2; pointer-events: none; }
 .roulette-window::before { top: 0; background: linear-gradient(var(--surface-2), transparent); }
