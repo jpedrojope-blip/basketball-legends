@@ -137,11 +137,11 @@ a { color: var(--accent); }
 }
 
 /* --------------------------------------------------------------- telas --- */
-.screen { display: none; }
+.screen { display: none; visibility: hidden; pointer-events: none; }
 /* `backwards` (e não `both`): uma animação de transform "presa" na tela faria
    dela o bloco de contenção, e a barra de ações fixa do celular pararia de
    grudar no rodapé da janela. */
-.screen.active { display: block; animation: screenIn .42s var(--ease) backwards; }
+.screen.active { display: block; visibility: visible; pointer-events: auto; animation: screenIn .42s var(--ease) backwards; }
 @keyframes screenIn {
   from { opacity: 0; transform: translateY(14px) scale(.995); }
   to   { opacity: 1; transform: none; }
