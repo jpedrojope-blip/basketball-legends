@@ -355,6 +355,8 @@ a { color: var(--accent); }
 .hero-stage-stats strong { font: 800 26px var(--font-display); color: var(--text); }
 .hero-stage-stats span { color: var(--muted); font: 700 9px var(--font-mono); letter-spacing: 1px; }
 .react-court-shell { position: absolute; inset: 0; }
+.hero-stage:has(.react-court-shell) { background: radial-gradient(circle at 50% 45%, rgba(255,122,26,.12), transparent 42%), linear-gradient(145deg, #101724, #070a10 72%); }
+.react-court-shell canvas { display: block; width: 100%; height: 100%; }
 .react-court-svg { position: absolute; inset: 62px 22px 58px; width: calc(100% - 44px); height: calc(100% - 120px); overflow: visible; }
 .react-floor { filter: drop-shadow(0 16px 14px rgba(0,0,0,.45)); opacity: .78; }
 .react-line, .react-arc { fill: none; stroke: rgba(255,255,255,.5); stroke-width: 3; vector-effect: non-scaling-stroke; }
