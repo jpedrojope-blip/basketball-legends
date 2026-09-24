@@ -83,7 +83,8 @@ const UI = (function () {
       ticks++;
       if (ticks >= totalTicks) {
         clearInterval(interval);
-        trackEl.style.transform = `translateY(-${24 * 72}px)`;
+        trackEl.innerHTML = `<strong>${winner.name}</strong><small>${winner.pos} · Draft ${winner.draftYear}</small>`;
+        trackEl.style.transform = "translateY(32px)";
         trackEl.classList.add("landed");
         metaEl.textContent = `${winner.pos} · Draft ${winner.draftYear} · ${teamName(winner.team)}`;
         closeBtn.classList.remove("hidden");
