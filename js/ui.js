@@ -61,7 +61,7 @@ const UI = (function () {
 
   function playPlayerRoulette(roll, onDone) {
     const modal = $("modal-player-roulette");
-    const trackEl = $("player-roulette-track");
+    const wheelEl = $("player-roulette-wheel");
     const metaEl = $("player-roulette-meta");
     const closeBtn = $("btn-player-roulette-close");
     const winner = LEGENDS.find((legend) => legend.id === roll.legendIds[0]);
@@ -69,10 +69,12 @@ const UI = (function () {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const totalTicks = reduceMotion ? 1 : 22;
 
-    const previews = Array.from({ length: 24 }, (_, i) => LEGENDS[(i * 7 + roll.draftYear) % LEGENDS.length]);
-    previews.push(winner);
-    trackEl.innerHTML = previews.map((p) => `<strong>${p.name}</strong><small>${p.pos} · Draft ${p.draftYear}</small>`).join("");
-    trackEl.style.transform = "translateY(0)";
+    const previews = Array.from({ length: 12 }, (_, i) => LEGENDS[(i * 7 + roll.draftYear) % LEGENDS.length]);
+    const winnerIndex = previews.findIndex((p) => p.id === winner.id);
+    if (winnerIndex < 0) previews[0] = winner;
+    const finalIndex = winnerIndex < 0 ? 0 : winnerIndex;
+    wheelEl.innerHTML = previews.map((p) => `<span>${p.name}</span>`).join("");
+    wheelEl.style.transform = "rotate(0deg)";
     metaEl.textContent = "A roleta está girando";
     closeBtn.classList.add("hidden");
     modal.classList.remove("hidden");
@@ -83,9 +85,8 @@ const UI = (function () {
       ticks++;
       if (ticks >= totalTicks) {
         clearInterval(interval);
-        trackEl.innerHTML = `<strong>${winner.name}</strong><small>${winner.pos} · Draft ${winner.draftYear}</small>`;
-        trackEl.style.transform = "translateY(32px)";
-        trackEl.classList.add("landed");
+        wheelEl.style.transform = `rotate(${1440 + (360 - finalIndex * 30)}deg)`;
+        wheelEl.classList.add("landed");
         metaEl.textContent = `${winner.pos} · Draft ${winner.draftYear} · ${teamName(winner.team)}`;
         closeBtn.classList.remove("hidden");
         closeBtn.focus();
