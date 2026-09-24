@@ -144,6 +144,7 @@
   };
 
   function initDraftScreen() {
+    UI.$("btn-draft-home").addEventListener("click", () => UI.showScreen("screen-menu"));
     UI.$("btn-draft-reroll").addEventListener("click", () => {
       Engine.rerollRound(Game.career);
       saveActiveCareer();

@@ -497,6 +497,9 @@ a { color: var(--accent); }
 
 /* --------------------------------------------------------------- draft --- */
 .draft-header { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+.draft-title-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+.draft-title-row h2 { margin-bottom: 0; }
+.draft-title-row .btn { flex: 0 0 auto; }
 .draft-progress { min-width: 220px; flex: 1; }
 #draft-round-label { font-size: 12px; color: var(--muted); font-weight: 600; letter-spacing: .4px; }
 .progress-bar {
