@@ -336,7 +336,7 @@ a { color: var(--accent); }
 .hero-copy .menu-actions { margin: 0; max-width: 380px; }
 .hero-copy .menu-footnote { margin-top: 18px; }
 .status-live { display: inline-block; width: 7px; height: 7px; margin-right: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); }
-.hero-stage { min-height: 420px; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,.18); border-radius: 24px; background: linear-gradient(145deg, #172235, #0a101b 70%); box-shadow: 0 28px 70px -30px rgba(0,0,0,.9), inset 0 0 70px rgba(0,0,0,.25); transform: rotate(1.5deg); }
+.hero-stage { height: 420px; min-height: 0; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,.18); border-radius: 24px; background: linear-gradient(145deg, #172235, #0a101b 70%); box-shadow: 0 28px 70px -30px rgba(0,0,0,.9), inset 0 0 70px rgba(0,0,0,.25); transform: rotate(1.5deg); }
 .hero-stage::before { content: ""; position: absolute; inset: 14px; border: 1px solid rgba(255,255,255,.07); border-radius: 16px; }
 .hero-stage::after { content: ""; position: absolute; inset: 0; opacity: .28; background: repeating-linear-gradient(90deg, transparent 0 38px, rgba(255,180,92,.12) 39px 40px), linear-gradient(90deg, rgba(255,142,37,.18), transparent 38%, rgba(255,142,37,.12)); mix-blend-mode: screen; pointer-events: none; }
 .hero-stage-label { position: absolute; top: 30px; left: 30px; right: 30px; display: flex; justify-content: space-between; color: var(--muted); font: 700 10px var(--font-mono); letter-spacing: 1.4px; }
@@ -1339,7 +1339,7 @@ tbody tr:last-child td { border-bottom: none; }
   .hero-copy .menu-actions .btn { min-height: 48px; }
   .hero-copy .menu-footnote { margin-top: 13px; font-size: 11px; }
   .hero-description { margin-left: auto; margin-right: auto; }
-  .hero-stage { min-height: 250px; transform: none; border-radius: 20px; }
+  .hero-stage { height: 250px; min-height: 0; transform: none; border-radius: 20px; }
   .hero-stage-label { top: 20px; left: 20px; right: 20px; font-size: 9px; }
   .court-lines { inset: 48px 28px 62px; }
   .court-ball { font-size: 62px; }
