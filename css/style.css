@@ -327,6 +327,10 @@ a { color: var(--accent); }
   max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 1.05fr .95fr;
   gap: clamp(28px, 6vw, 82px); align-items: center; text-align: left;
 }
+.hero-grid-clean { grid-template-columns: minmax(0, 760px); justify-content: center; text-align: center; }
+.hero-grid-clean .hero-copy { text-align: center; }
+.hero-grid-clean .hero-copy .menu-actions { margin: 0 auto; }
+.hero-grid-clean .hero-description { margin-left: auto; margin-right: auto; }
 .hero-copy { padding: 20px 0; }
 .hero-kicker { color: var(--accent-2); font: 700 10px/1 var(--font-mono); letter-spacing: 2px; margin: 0 0 18px; }
 .hero-kicker span { color: var(--green); padding: 0 7px; }
