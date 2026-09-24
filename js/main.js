@@ -108,6 +108,7 @@
       Game.career = Engine.newCareer({
         name, position: Game.createChoice.position, difficulty: Game.createChoice.difficulty, seed,
       });
+      if (window.Analytics) window.Analytics.track("career_started");
       saveActiveCareer();
       enterDraftRound(true);
     });
@@ -271,6 +272,7 @@
     const btn = UI.$("btn-sim-season");
     btn.disabled = true;
     const res = Engine.simulateGame(Game.career);
+    if (window.Analytics) window.Analytics.track("game_finished", { count: 1 });
     saveActiveCareer();
 
     if (res.game.newInjury) {
@@ -289,6 +291,7 @@
   function handleSimMonth() {
     UI.$("btn-sim-season").disabled = true;
     const res = Engine.simulateMonth(Game.career);
+    if (window.Analytics) window.Analytics.track("game_finished", { count: res.monthEntry?.gp || 0 });
     saveActiveCareer();
     reportMonth(res.monthEntry);
 
@@ -327,6 +330,7 @@
   function handleSimPlayoffRound() {
     UI.$("btn-sim-season").disabled = true;
     const res = Engine.simulatePlayoffRound(Game.career);
+    if (window.Analytics) window.Analytics.track("game_finished", { count: res.series?.games?.length || 0 });
     saveActiveCareer();
     UI.playSeriesAnimation({ lastSeriesRound: res.roundName, lastSeries: res.series }, () => {
       if (res.seasonOver) {

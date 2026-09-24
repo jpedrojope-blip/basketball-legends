@@ -9,5 +9,13 @@ index.legacy.bak.html
 # Logs e arquivos locais de desenvolvimento
 *.log
 node_modules/
+react-bits-reference/
+
+# Métricas agregadas locais do servidor (não versionar dados de audiência).
+data/
+.env
 
 # Saves locais do jogo não são arquivos do projeto, mas ficam no navegador.
+
+.vercel
+.env*

@@ -331,11 +331,13 @@ a { color: var(--accent); }
 .hero-grid-clean .hero-copy { width: min(100%, 760px); text-align: center; margin: 0 auto; }
 .hero-grid-clean .hero-copy .menu-actions { margin: 0 auto; }
 .hero-grid-clean .hero-description { margin-left: auto; margin-right: auto; }
+.hero-grid-clean .tagline { margin-left: auto; margin-right: auto; text-align: center; }
 .hero-copy { padding: 20px 0; }
 .hero-kicker { color: var(--accent-2); font: 700 10px/1 var(--font-mono); letter-spacing: 2px; margin: 0 0 18px; }
 .hero-kicker span { color: var(--green); padding: 0 7px; }
 .hero-copy .brand { font-size: clamp(54px, 8vw, 104px); margin-bottom: 20px; }
 .hero-copy .tagline { max-width: 570px; margin: 0 0 14px; font-size: clamp(19px, 2.2vw, 27px); line-height: 1.2; color: var(--text); font-weight: 700; }
+.hero-grid-clean .hero-copy .tagline { margin: 0 auto 14px; text-align: center; }
 .hero-description { max-width: 510px; margin: 0 0 28px; color: var(--muted); font-size: 14px; }
 .hero-copy .menu-actions { margin: 0; max-width: 380px; }
 .hero-copy .menu-footnote { margin-top: 18px; }
@@ -1362,7 +1364,7 @@ tbody tr:last-child td { border-bottom: none; }
   .hero-copy { text-align: center; }
   .hero-copy { padding: 8px 0 0; }
   .hero-kicker { margin-bottom: 12px; font-size: 9px; letter-spacing: 1.5px; }
-  .hero-copy .brand { font-size: clamp(48px, 15vw, 64px); line-height: .9; margin-bottom: 16px; }
+  .hero-copy .brand { font-size: clamp(42px, 14vw, 64px); line-height: .9; letter-spacing: -.04em; margin-bottom: 16px; }
   .hero-copy .tagline { font-size: 17px; line-height: 1.25; margin-bottom: 12px; }
   .hero-description { font-size: 13px; line-height: 1.5; margin-bottom: 20px; max-width: 320px; }
   .hero-copy .menu-actions { margin: 0 auto; }

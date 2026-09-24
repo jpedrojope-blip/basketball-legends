@@ -1,10 +1,40 @@
-# LENDA DA QUADRA
+# THE MAMBA
 
 Simulador de carreira de basquete no navegador. Jogável do início ao fim, sem instalar nada.
 
 ## Como abrir
 
 Dê duplo clique em `index.html` (ou clique com o botão direito → Abrir com → seu navegador).
+
+Para usar o painel local e testar o jogo em outros dispositivos da mesma rede, rode o servidor:
+
+```bash
+npm start
+```
+
+Depois abra `http://localhost:8787` no computador e `http://IP-DO-COMPUTADOR:8787` em outros dispositivos da mesma rede. O painel fica em `http://localhost:8787/admin`.
+
+Antes de iniciar, copie `.env.example` para `.env`, troque todos os valores de exemplo e defina uma senha forte em `ADMIN_PASSWORD`. O servidor não possui senha padrão e não inicia sem configuração. Em produção, a senha precisa ter pelo menos 12 caracteres, os segredos precisam ter pelo menos 32 caracteres, `ALLOW_FILE_ORIGIN` deve ser `false` e o acesso deve passar por HTTPS.
+
+O servidor registra somente contagens agregadas, identificadores anônimos com hash e o tipo aproximado de dispositivo. O progresso, os atributos, os resultados e o ranking do jogo continuam no navegador e nunca são enviados ao painel. Métricas detalhadas são retidas por 90 dias por padrão.
+
+O painel mostra jogadores do dia, jogadores únicos, sessões online, partidas concluídas, carreiras iniciadas, histórico de 14 dias e divisão entre celular, tablet e computador. A métrica de “online agora” considera uma sessão ativa nos últimos 90 segundos.
+
+## Painel online sem custo
+
+O site publicado fica em [`basketball-legends-five.vercel.app`](https://basketball-legends-five.vercel.app) e o painel em [`/admin`](https://basketball-legends-five.vercel.app/admin). A versão online usa as funções da Vercel e um projeto Supabase no plano gratuito. O banco recebe apenas eventos agregados de carreira iniciada, partida concluída e presença online; nenhum save ou dado do jogador é enviado.
+
+Para publicar uma nova versão, use `npm exec --yes vercel -- deploy --prod --yes`. As variáveis `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `ADMIN_PASSWORD`, `SESSION_SECRET`, `ANALYTICS_SALT` e `PUBLIC_ORIGIN` devem permanecer configuradas como variáveis de ambiente da Vercel; nunca coloque a chave privada do Supabase em HTML ou JavaScript público.
+
+## Segurança
+
+- O servidor não inicia sem `ADMIN_PASSWORD`; em produção exige senha com 12+ caracteres e segredos com 32+ caracteres.
+- O painel usa sessão assinada em cookie `HttpOnly`, `SameSite=Strict`, expiração de 12 horas e proteção contra tentativas repetidas de login.
+- A API valida origem, método, `Content-Type`, tamanho do corpo e formato dos eventos. O acesso por arquivo `file://` só fica habilitado em desenvolvimento.
+- Há CSP, proteção contra enquadramento, MIME sniffing e políticas restritivas de permissões. Em produção, publique somente por HTTPS.
+- Arquivos arbitrários, `.env`, `server.js` e a pasta `data/` não são servidos pelo servidor HTTP.
+- O save continua sendo local ao navegador. Como qualquer save local pode ser alterado pelo próprio jogador, ele não deve ser tratado como dado confiável para ranking competitivo ou premiação.
+- O relatório de revisão e o checklist de implantação ficam em [`SECURITY.md`](SECURITY.md).
 
 ## Inspiração
 
@@ -66,6 +96,8 @@ A tela mostra o que muda a sua decisão; o resto fica a um clique de distância.
 ```
 basketball-legends/
 ├── index.html
+├── admin.html       # painel protegido
+├── api/             # funções online de telemetria e administração
 ├── css/style.css     # design system (tokens, componentes, responsivo)
 └── js/
     ├── rng.js       # RNG com seed (determinístico)

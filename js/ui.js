@@ -4,6 +4,17 @@
 const UI = (function () {
   const $ = (id) => document.getElementById(id);
 
+  // Dados vindos do localStorage podem ser adulterados pelo jogador.
+  // Escapar texto antes de colocá-lo em HTML evita XSS em saves manipulados.
+  function escapeHTML(value) {
+    return String(value == null ? "" : value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/["]/g, "&quot;")
+      .replace(/[\u0027]/g, "&#39;");
+  }
+
   function showScreen(id) {
     document.querySelectorAll(".screen").forEach((s) => s.classList.remove("active"));
     $(id).classList.add("active");
@@ -73,19 +84,19 @@ const UI = (function () {
     const winnerIndex = previews.findIndex((p) => p.id === winner.id);
     if (winnerIndex < 0) previews[0] = winner;
     const finalIndex = winnerIndex < 0 ? 0 : winnerIndex;
-    wheelEl.innerHTML = `<small>LENDA ATUAL</small><strong>${previews[0].name}</strong><span>${previews[0].pos} · DRAFT ${previews[0].draftYear} · ${teamName(previews[0].team)}</span>`;
+    wheelEl.innerHTML = `<small>LENDA ATUAL</small><strong>${escapeHTML(previews[0].name)}</strong><span>${escapeHTML(previews[0].pos)} · DRAFT ${escapeHTML(previews[0].draftYear)} · ${escapeHTML(teamName(previews[0].team))}</span>`;
     metaEl.textContent = "A roleta está girando";
     closeBtn.classList.add("hidden");
     modal.classList.remove("hidden");
 
     const interval = setInterval(() => {
       const preview = LEGENDS[(ticks * 7 + roll.draftYear) % LEGENDS.length];
-      wheelEl.innerHTML = `<small>LENDA ATUAL</small><strong>${preview.name}</strong><span>${preview.pos} · DRAFT ${preview.draftYear} · ${teamName(preview.team)}</span>`;
+    wheelEl.innerHTML = `<small>LENDA ATUAL</small><strong>${escapeHTML(preview.name)}</strong><span>${escapeHTML(preview.pos)} · DRAFT ${escapeHTML(preview.draftYear)} · ${escapeHTML(teamName(preview.team))}</span>`;
       metaEl.textContent = `${preview.pos} · Draft ${preview.draftYear}`;
       ticks++;
       if (ticks >= totalTicks) {
         clearInterval(interval);
-        wheelEl.innerHTML = `<small>LENDA ATUAL</small><strong>${winner.name}</strong><span>${winner.pos} · DRAFT ${winner.draftYear} · ${teamName(winner.team)}</span>`;
+        wheelEl.innerHTML = `<small>LENDA ATUAL</small><strong>${escapeHTML(winner.name)}</strong><span>${escapeHTML(winner.pos)} · DRAFT ${escapeHTML(winner.draftYear)} · ${escapeHTML(teamName(winner.team))}</span>`;
         wheelEl.classList.add("landed");
         metaEl.textContent = `${winner.pos} · Draft ${winner.draftYear} · ${teamName(winner.team)}`;
         closeBtn.classList.remove("hidden");
@@ -198,7 +209,7 @@ const UI = (function () {
   function awardsBadgesHTML(entry) {
     if (!entry.awards || !entry.awards.length) return "";
     return entry.awards
-      .map((a) => `<span class="badge${a === "Campeão" ? " champ" : ""}">${a}</span>`)
+      .map((a) => `<span class="badge${a === "Campeão" ? " champ" : ""}">${escapeHTML(a)}</span>`)
       .join("");
   }
 
@@ -207,7 +218,7 @@ const UI = (function () {
     return `<tr>
       <td>${entry.season}</td>
       <td>${entry.age}</td>
-      <td>${entry.team}</td>
+      <td>${escapeHTML(entry.team)}</td>
       <td>${entry.ovr}</td>
       <td class="col-extra">${entry.chemistry}</td>
       <td class="col-extra">${entry.gp}</td>
@@ -219,7 +230,7 @@ const UI = (function () {
       <td class="col-extra">${entry.ftPct}%</td>
       <td class="col-extra">${entry.eff}</td>
       <td>${entry.teamWins}-${entry.teamLosses}</td>
-      <td>${formatPlayoff(entry)}</td>
+      <td>${escapeHTML(formatPlayoff(entry))}</td>
       <td>${awardsBadgesHTML(entry) || '<span class="muted">—</span>'}</td>
     </tr>`;
   }
@@ -242,7 +253,7 @@ const UI = (function () {
         <div class="mini-stat"><span class="n">${entry.eff}</span><span class="l">EFF</span></div>
       </div>
       <p class="recap-line">
-        Temporada ${entry.season} · ${entry.age} anos · ${entry.team} —
+        Temporada ${escapeHTML(entry.season)} · ${escapeHTML(entry.age)} anos · ${escapeHTML(entry.team)} —
         <strong>${entry.teamWins}-${entry.teamLosses}</strong>, ${formatPlayoff(entry)}
       </p>
       <div class="awards-line">${awardsBadgesHTML(entry) || '<span class="muted">Nenhum prêmio nesta temporada.</span>'}</div>
@@ -254,10 +265,16 @@ const UI = (function () {
     const mode = career.simMode || "month";
     return `
       <div class="seg-switch" role="group" aria-label="Ritmo da simulação">
-        <button class="seg-option${mode === "game" ? " active" : ""}" onclick="window.__blOnSetSimMode('game')">Jogo a jogo</button>
-        <button class="seg-option${mode === "month" ? " active" : ""}" onclick="window.__blOnSetSimMode('month')">Mês a mês</button>
+        <button class="seg-option${mode === "game" ? " active" : ""}" data-sim-mode="game">Jogo a jogo</button>
+        <button class="seg-option${mode === "month" ? " active" : ""}" data-sim-mode="month">Mês a mês</button>
       </div>
     `;
+  }
+
+  function bindSimModeButtons(container) {
+    container.querySelectorAll("[data-sim-mode]").forEach((button) => {
+      button.addEventListener("click", () => window.__blOnSetSimMode(button.dataset.simMode));
+    });
   }
 
   function lastGameHTML(ss) {
@@ -270,7 +287,7 @@ const UI = (function () {
       <div class="last-game ${g.won ? "win" : "loss"}">
         <div class="lg-result">${g.won ? "V" : "D"}</div>
         <div class="lg-body">
-          <div class="lg-score">${g.teamScore} <span>x</span> ${g.oppScore} <em>vs ${g.opponent}</em></div>
+        <div class="lg-score">${escapeHTML(g.teamScore)} <span>x</span> ${escapeHTML(g.oppScore)} <em>vs ${escapeHTML(g.opponent)}</em></div>
           <div class="lg-line">${line}</div>
         </div>
         <div class="lg-when">${g.month} · jogo ${g.gameInMonth}/${g.gamesInMonth}</div>
@@ -288,6 +305,7 @@ const UI = (function () {
           <p class="muted">Aperte o botão principal abaixo para começar a Temporada ${career.season + 1}. Você poderá acompanhar o recorde, os jogos e suas médias aqui.</p>
         </div>
       `;
+      bindSimModeButtons(container);
       return;
     }
 
@@ -334,6 +352,7 @@ const UI = (function () {
         <span>Química <strong>${ss.chemistry.label}</strong></span>
       </div>
     `;
+    bindSimModeButtons(container);
   }
 
   function renderCareerDashboard(career) {
@@ -548,7 +567,7 @@ const UI = (function () {
     const roster = Engine.getCurrentRoster(career);
     $("roster-subtitle").textContent = `Elenco do(a) ${roster.teamName} — Temporada ${career.season + (career.seasonState ? 0 : 1)}`;
     $("roster-body").innerHTML = roster.players
-      .map((p) => `<tr><td>${p.name}</td><td>${p.role}</td><td>${p.ppg}</td><td>${p.rpg}</td><td>${p.apg}</td></tr>`)
+      .map((p) => `<tr><td>${escapeHTML(p.name)}</td><td>${escapeHTML(p.role)}</td><td>${escapeHTML(p.ppg)}</td><td>${escapeHTML(p.rpg)}</td><td>${escapeHTML(p.apg)}</td></tr>`)
       .join("");
   }
 
@@ -570,11 +589,11 @@ const UI = (function () {
     let html = "";
     const renderSection = (name, entries) => {
       seen.add(name);
-      html += `<div class="trophy-section"><h3>${name} (${entries.length})</h3>`;
+      html += `<div class="trophy-section"><h3>${escapeHTML(name)} (${entries.length})</h3>`;
       if (!entries.length) {
         html += `<p class="trophy-empty">Nunca conquistado.</p>`;
       } else {
-        html += `<div class="trophy-season-list">${entries.map((e) => `<span class="trophy-season-chip">Temp ${e.season} (${e.age} anos) — ${e.team}</span>`).join("")}</div>`;
+        html += `<div class="trophy-season-list">${entries.map((e) => `<span class="trophy-season-chip">Temp ${escapeHTML(e.season)} (${escapeHTML(e.age)} anos) — ${escapeHTML(e.team)}</span>`).join("")}</div>`;
       }
       html += `</div>`;
     };
@@ -597,8 +616,8 @@ const UI = (function () {
     container.innerHTML = `
       <h3>Comparação com a Lenda mais parecida</h3>
       <div class="closest-legend-body">
-        <div class="closest-legend-name">${legend.name}</div>
-        <div class="muted">${legend.pos} · ${legend.era} · ${teamName(legend.team)} — ${legend.tag}</div>
+        <div class="closest-legend-name">${escapeHTML(legend.name)}</div>
+        <div class="muted">${escapeHTML(legend.pos)} · ${escapeHTML(legend.era)} · ${escapeHTML(teamName(legend.team))} — ${escapeHTML(legend.tag)}</div>
         <div class="attr-compare-grid">
           ${ATTR_KEYS.map((k) => `
             <div class="attr-compare-row">
@@ -641,7 +660,7 @@ const UI = (function () {
     tbody.innerHTML = sorted
       .map(
         (e, i) => `<tr>
-        <td>${i + 1}</td><td>${e.name}</td><td>${e.position}</td><td>${e.tierName}</td>
+        <td>${i + 1}</td><td>${escapeHTML(e.name)}</td><td>${escapeHTML(e.position)}</td><td>${escapeHTML(e.tierName)}</td>
         <td>${e.score}</td><td>${e.careerPPG}</td><td>${e.champions}</td><td>${e.mvp}</td>
       </tr>`
       )
@@ -657,7 +676,7 @@ const UI = (function () {
       list
         .map(
           (r, i) => `<tr class="${r.isPlayer ? "standings-you" : ""}">
-        <td>${i + 1}</td><td>${r.name}${r.isPlayer ? " (você)" : ""}</td><td>${r.wins}</td><td>${r.losses}</td>
+        <td>${i + 1}</td><td>${escapeHTML(r.name)}${r.isPlayer ? " (você)" : ""}</td><td>${escapeHTML(r.wins)}</td><td>${escapeHTML(r.losses)}</td>
       </tr>`
         )
         .join("");
@@ -710,7 +729,7 @@ const UI = (function () {
     const modal = $("modal-trade-anim");
     $("trade-anim-from-team").textContent = pkg.fromTeamName;
     $("trade-anim-to-team").textContent = pkg.toTeamName;
-    $("trade-anim-incoming").innerHTML = pkg.incoming.map((p) => `<div class="trade-piece">${p}</div>`).join("");
+    $("trade-anim-incoming").innerHTML = pkg.incoming.map((p) => `<div class="trade-piece">${escapeHTML(p)}</div>`).join("");
     modal.classList.remove("hidden");
     const closeBtn = $("btn-trade-anim-close");
     closeBtn.classList.add("hidden");

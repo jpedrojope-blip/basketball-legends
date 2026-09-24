@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b12">
+    <title>Painel — THE MAMBA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/admin.css?v=1">
+</head>
+<body>
+  <main class="admin-shell">
+    <section id="login-view" class="login-card" aria-labelledby="login-title">
+      <div class="brand-mark"><span>●</span> THE MAMBA</div>
+      <p class="eyebrow">Área restrita</p>
+      <h1 id="login-title">Painel de audiência</h1>
+      <p class="muted">Acompanhe o movimento do site sem acessar os dados das carreiras.</p>
+      <form id="login-form" class="login-form">
+        <label for="admin-password">Senha de administrador</label>
+        <input id="admin-password" type="password" autocomplete="current-password" required>
+        <button class="primary-button" type="submit">Entrar no painel</button>
+        <p id="login-error" class="form-error" role="alert"></p>
+      </form>
+      <a class="back-link" href="./index.html">← Voltar para o jogo</a>
+    </section>
+
+    <section id="dashboard-view" class="dashboard hidden" aria-labelledby="dashboard-title">
+      <header class="dashboard-header">
+        <div>
+          <p class="eyebrow">Visão geral</p>
+          <h1 id="dashboard-title">Audiência do site</h1>
+          <p id="updated-at" class="muted">Aguardando dados…</p>
+        </div>
+        <div class="header-actions">
+          <span class="live-pill"><span class="live-dot"></span> Atualização automática</span>
+          <a class="ghost-button back-to-game" href="./index.html">← Voltar ao jogo</a>
+          <button id="logout-button" class="ghost-button" type="button">Sair</button>
+        </div>
+      </header>
+
+      <div class="metric-grid">
+        <article class="metric-card accent-orange">
+          <span class="metric-label">Jogadores históricos</span>
+          <strong id="historical-unique">—</strong>
+          <span class="metric-note">navegadores que já jogaram</span>
+        </article>
+        <article class="metric-card accent-blue">
+          <span class="metric-label">Jogadores hoje</span>
+          <strong id="today-unique">—</strong>
+          <span class="metric-note">navegadores com carreira iniciada hoje</span>
+        </article>
+        <article class="metric-card accent-green">
+          <span class="metric-label">Online agora</span>
+          <strong id="active-now">—</strong>
+          <span class="metric-note">últimos 90 segundos</span>
+        </article>
+        <article class="metric-card accent-purple">
+          <span class="metric-label">Carreiras iniciadas</span>
+          <strong id="today-careers">—</strong>
+          <span class="metric-note">hoje</span>
+        </article>
+      </div>
+
+      <div class="content-grid">
+        <section class="panel chart-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Últimos 14 dias</p>
+              <h2>Partidas e jogadores únicos</h2>
+            </div>
+            <div class="legend"><span><i class="legend-visits"></i>Partidas</span><span><i class="legend-unique"></i>Jogadores únicos</span></div>
+          </div>
+          <div id="traffic-chart" class="traffic-chart" aria-label="Gráfico de partidas dos últimos 14 dias"></div>
+        </section>
+
+        <section class="panel device-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Perfil do acesso</p>
+              <h2>Dispositivos</h2>
+            </div>
+          </div>
+          <div id="device-list" class="device-list"></div>
+          <p class="privacy-note">O painel recebe apenas contagens agregadas. Nenhuma informação da carreira é enviada.</p>
+        </section>
+      </div>
+
+      <footer class="dashboard-footer">
+        <span>Partidas registradas: <strong id="total-visits">—</strong></span>
+        <span>Jogadores históricos: <strong id="total-unique">—</strong></span>
+        <span>Carreiras: <strong id="total-careers">—</strong></span>
+      </footer>
+    </section>
+  </main>
+  <script src="js/admin.js?v=2"></script>
+</body>
+</html>

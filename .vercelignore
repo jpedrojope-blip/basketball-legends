@@ -1,0 +1,10 @@
+.env
+.env.*
+!.env.example
+data/
+supabase/
+server.js
+*.legacy.bak.*
+.git/
+.codex/
+.claude/

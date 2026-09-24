@@ -1,0 +1,9 @@
+{
+  "name": "basketball-legends",
+  "version": "1.0.0",
+  "private": true,
+  "description": "THE MAMBA com painel privado de audiência",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
